@@ -5,7 +5,7 @@ Domínio: **mobile**. Guideline: `$nero` → `references/guidelines/mobile-guide
 | Arquivo | Quando ler |
 | --- | --- |
 | [structure.md](./structure.md) | Pastas e arquivos que existem no checkout |
-| [runtime.md](./runtime.md) | Boot/DI/pipeline — hoje só o alvo, sem código |
+| [runtime.md](./runtime.md) | Boot Expo, storage, viewer |
 | [domain.md](./domain.md) | Superfícies e termos de produto |
 | [conventions.md](./conventions.md) | Como mudar docs e, depois, o app |
 | [patterns.md](./patterns.md) | Padrões locais já fechados nas specs/ADRs |

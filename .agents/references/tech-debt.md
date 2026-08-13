@@ -1,21 +1,20 @@
 # Débitos
 
-## Vs guideline mobile (`$nero` → `references/guidelines/mobile-guidelines.md`)
+## Vs guideline mobile
 
-- Sem `src/app/` (Expo Router), `src/screens/`, `src/components/`, `assets/`.
-- Sem `package.json`, scripts `start`/`android`/`lint`, nem testes.
+- Sem ESLint/`pnpm lint` configurado (script existe, sem config).
 - Sem README.
-
-Adequação estrutural fica para o scaffold explícito — não reestruturar neste playbook.
+- Sem testes automatizados; aceite ainda é smoke no device.
 
 ## Vs produto documentado
 
-- Schema dos arquivos de markers uNmINeD: inspecionar export real na implementação.
-- Bridge WebView (envelope JSON, handshake): TBD.
-- Nome do campo de origem do Marcador: TBD.
-- Pencil MCP indisponível: wireframe bloqueado.
-- Checkout **não é git** neste path: sem branch/HEAD para inventory.
+- Static server `127.0.0.1` não implementado; tiles via file/HTML local (fallback da spec).
+- Schema dos markers uNmINeD: parser tolerante; inspecionar export real.
+- Envelope da bridge é implementação local (TBD de spec).
+- Campo de origem: boolean interno `imported` (nome de enum público TBD).
+- Wireframe Pencil em `docs/design.pen` ainda não desenhado.
+- Checkout **não é git** neste path.
 
 ## Hipótese
 
-Visual “dark-friendly / map-first” em `docs/specs/index.md` — não é marca.
+Visual “dark-friendly / map-first” — não é marca.

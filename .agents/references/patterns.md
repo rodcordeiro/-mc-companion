@@ -1,6 +1,6 @@
 # Padrões locais (specs/ADRs)
 
-Observados na documentação, não no código.
+Observados na documentação e no MVP em `src/`.
 
 - Copy-on-import da Fonte de Mapa; original intocado (ADR 0003).
 - Viewer Leaflet próprio; `expo-leaflet` fora da arquitetura (ADR 0002).

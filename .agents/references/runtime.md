@@ -1,12 +1,15 @@
 # Runtime
 
-Não há bootstrap no checkout. Sem Expo Router, sem DI, sem static server, sem WebView.
+App Expo SDK 57, Android first. Entry: `expo-router/entry`. Rotas em `src/app/`.
 
-Alvo (ADRs 0001–0002, spec `docs/specs/viewer-e-fonte-de-mapa.md`):
+```text
+pnpm start          # Metro
+pnpm android        # device/emulator Android
+pnpm typecheck      # tsc --noEmit
+```
 
-- App Expo Android.
-- Home = tela Mapa; viewer Leaflet em WebView própria (HTML/JS local).
-- Tiles da Fonte de Mapa (cópia interna); static server `127.0.0.1` preferido; file/HTML como fallback.
-- Marcadores no storage do app; overlay enviado por payload, não pelo HTML do export.
-
-Biblioteca, porta e ciclo de vida do server: TBD de implementação. Se exigir nativo incompatível com Expo managed, reavaliar ADR 0001.
+- Home = Mapa (`src/app/index.tsx` → `src/screens/map`).
+- Viewer Leaflet em WebView (`src/viewer` + Leaflet vendorizado). Sem `expo-leaflet`.
+- Tiles da cópia interna via `file://` + `baseUrl` (fallback da spec; static server `127.0.0.1` ainda não embutido — nativo extra exigiria reavaliar ADR 0001).
+- Marcadores em `documentDirectory/markers.json`; meta da Fonte em `app-meta.json`; cópias em `maps/<id>/`.
+- Seleção de pasta: `Directory.pickDirectoryAsync()` (SAF).

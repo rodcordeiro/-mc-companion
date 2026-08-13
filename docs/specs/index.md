@@ -44,9 +44,7 @@ iOS; Rotas e Eixos da ferrovia; multi-world; edição do mundo Minecraft; parser
 
 ## Notas de QA
 
-Fase atual: só documentação. Estes critérios não são testes executáveis.
-
-Não testar até existir app Android:
+Aceite do MVP no Android (ainda sem suíte automatizada):
 
 - Importação de um export uNmINeD pequeno para storage interno
 - Renderização dos tiles do Overworld na home, sem a pasta original

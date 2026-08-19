@@ -2,13 +2,11 @@
 
 Recorte funcional: [`docs/product-brief.md`](../product-brief.md).  
 Glossário: [`CONTEXT.md`](../../CONTEXT.md).  
-Esta pasta decompõe o MVP fechado. Grill de produto encerrado (2026-08-13). Pontos abertos restantes são implementação ou Pencil. Hipóteses estão marcadas. Rotas/Eixos da ferrovia estão fechados como **fora do MVP**.
+Esta pasta decompõe o MVP fechado. Grill de produto encerrado (2026-08-13). Alinhamento docs↔código (2026-08-19): tiles do MVP via file/HTML da cópia interna; envelope da bridge fechado como implementado; origem do Marcador = boolean `imported`. Rotas/Eixos da ferrovia permanecem **fora do MVP**. Hipóteses visuais estão marcadas.
 
 ## Design (Pencil)
 
-Canvas canônico do wireframe: [`docs/design.pen`](../design.pen).
-
-**Bloqueio:** o wireframe **não pode ser desenhado** até o Pencil MCP (`user-highagency.pencildev-extension-pencil`) estar habilitado. Não substituir o `.pen` por formato inventado. Até lá, a IA textual vive nestas specs.
+Canvas canônico do wireframe: [`docs/design.pen`](../design.pen). Só editar via Pencil MCP. O canvas ainda não foi desenhado; a IA textual destas specs continua a fonte de produto até o wireframe existir. Não substituir o `.pen` por formato inventado.
 
 ## Fontes fechadas
 
@@ -25,22 +23,32 @@ Canvas canônico do wireframe: [`docs/design.pen`](../design.pen).
 | [tela-mapa.md](./tela-mapa.md) | Fechado | Tiles, overlay, seletor de Dimensão; sem alta no mapa |
 | [tela-marcadores.md](./tela-marcadores.md) | Fechado | Lista única, ordem Dimensão depois nome, alta/edição/exclusão |
 | [tela-configuracao.md](./tela-configuracao.md) | Fechado | Seleção, status, Atualizar mapa e Substituir fonte |
-| [importacao.md](./importacao.md) | Fechado | Copy-on-import; Atualizar = merge; Substituir = wipe |
-| [modelo-marcador.md](./modelo-marcador.md) | Fechado | Campos e chave de idempotência |
-| [viewer-e-fonte-de-mapa.md](./viewer-e-fonte-de-mapa.md) | Fechado (com TBD) | Contrato app ↔ WebView ↔ Fonte de Mapa |
+| [importacao.md](./importacao.md) | Fechado | Copy-on-import; Atualizar = merge; Substituir = wipe condicional; tiles via file/HTML |
+| [modelo-marcador.md](./modelo-marcador.md) | Fechado | Campos, chave de idempotência, origem `imported` |
+| [viewer-e-fonte-de-mapa.md](./viewer-e-fonte-de-mapa.md) | Fechado | Contrato app ↔ WebView; tiles file/HTML no MVP; HTTP 127.0.0.1 pós-MVP |
 | [pos-mvp-ferrovia.md](./pos-mvp-ferrovia.md) | Pós-MVP | Origem+destino; overlay no Mapa; pool PT misturado; Hub se via ≤ 2× |
 
 ## Glossário — rotas (fechado)
 
 **Rotas fora do MVP.** São a ferrovia do mundo (Rota + Eixos), não overlay do mapa no recorte atual. Definições em [`CONTEXT.md`](../../CONTEXT.md). Detalhe e precedente: [pos-mvp-ferrovia.md](./pos-mvp-ferrovia.md).
 
+## Decisões de implementação (2026-08-19)
+
+Fechadas no alinhamento docs↔código; detalhe em [viewer-e-fonte-de-mapa.md](./viewer-e-fonte-de-mapa.md) e [modelo-marcador.md](./modelo-marcador.md).
+
+- Tiles do MVP: file/HTML da cópia interna. HTTP `127.0.0.1` é pós-MVP.
+- Bridge: `init` / `setDimension` / `setOverlay` / `centerOn` (app→viewer) e `ready` / `markerPress` / `emptyTap` / `error` (viewer→app). Overlay mínimo: `id`, `nome`, `dimensao`, `x`, `z`.
+- Origem do Marcador: boolean `imported`.
+- Metadados do mapa: parse nativo de `unmined.map.properties.js`; o viewer não lê o JS do export.
+- Costura de teste preferida: comportamento externo da importação (validar → copiar → trocar Fonte → marcadores) e das mensagens do viewer. Sem assertar HTML interno.
+
 ## TBD (não inventar regra)
 
-Nenhum TBD de produto aberto neste recorte. Restante: implementação (schema uNmINeD, bridge WebView, nome do campo origem) e Pencil MCP para o wireframe.
+Nenhum TBD de produto aberto neste recorte. Schema de export real fechado como evidência ([Inspect real uNmINeD export markers and tiles](https://github.com/rodcordeiro/-mc-companion/issues/4)); parser e tile URLs ainda não batem. Smoke no Android — mapa [Wayfinder: MVP smoke path after spec alignment](https://github.com/rodcordeiro/-mc-companion/issues/2). Wireframe Pencil e higiene (README, lint, testes) ficam para depois.
 
 ## Fora do MVP
 
-iOS; Rotas e Eixos da ferrovia; multi-world; edição do mundo Minecraft; parser Bedrock; renderer próprio de chunks; sync cloud; multiplayer em tempo real.
+iOS; Rotas e Eixos da ferrovia; multi-world; edição do mundo Minecraft; parser Bedrock; renderer próprio de chunks; sync cloud; multiplayer em tempo real; static server HTTP em `127.0.0.1` (o MVP lê a cópia interna via file/HTML).
 
 ## Notas de QA
 
@@ -50,7 +58,7 @@ Aceite do MVP no Android (ainda sem suíte automatizada):
 - Renderização dos tiles do Overworld na home, sem a pasta original
 - Overlay de marcadores e toque para detalhes
 - Atualizar mapa: tiles novos, merge de marcadores sem duplicar (ADR 0004); manuais permanecem
-- Substituir fonte apaga todos os Marcadores; o novo export pode importar os seus
+- Substituir fonte apaga todos os Marcadores **só se o passo de marcadores concluir**; o novo export pode importar os seus
 - Reinício mantendo mapa e marcadores
 - Lista de Marcadores sem filtro de Dimensão (Dimensão visível em cada item)
 - Aviso de tamanho do export quando conhecido; disco cheio via erro do SO
@@ -60,7 +68,7 @@ Aceite do MVP no Android (ainda sem suíte automatizada):
 - Lista de Marcadores: Overworld → Nether → End, depois nome A–Z
 - Fluidez do mapa no Android (medir antes de otimizar)
 
-TBD sem Given/When/Then: implementação (schema uNmINeD, bridge) e Pencil MCP.
+Sem GWT nesta pasta: confirmar arquivos reais do uNmINeD; smoke no device; Pencil.
 
 ## Hipótese visual
 

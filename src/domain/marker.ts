@@ -9,7 +9,7 @@ export type Marker = {
   y?: number;
   descricao?: string;
   tags?: string;
-  /** Distingue importado vs alta manual. Nome de enum público permanece TBD. */
+  /** Distingue importado vs alta manual. Sem enum público no MVP. */
   imported: boolean;
   icon?: string;
   color?: string;

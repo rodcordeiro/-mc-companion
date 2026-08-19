@@ -8,12 +8,9 @@
 
 ## Vs produto documentado
 
-- Static server `127.0.0.1` não implementado; tiles via file/HTML local (fallback da spec).
-- Schema dos markers uNmINeD: parser tolerante; inspecionar export real.
-- Envelope da bridge é implementação local (TBD de spec).
-- Campo de origem: boolean interno `imported` (nome de enum público TBD).
+- Parser de `custom.markers.js` e tile URLs `zoom.{z}/…/tile.{x}.{y}.{format}` ainda não batem com o export real (evidência: issue Inspect real uNmINeD export).
 - Wireframe Pencil em `docs/design.pen` ainda não desenhado.
-- Checkout **não é git** neste path.
+- Static server `127.0.0.1` é **pós-MVP** (não é débito do recorte atual). Tiles do MVP: file/HTML da cópia interna.
 
 ## Hipótese
 

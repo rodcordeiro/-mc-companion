@@ -1,6 +1,6 @@
 # Modelo de Marcador
 
-Marcador é ponto de interesse do usuário ou importado do export. Vive no storage do app, não no arquivo do export. **Atualizar mapa** faz merge (ADR 0004). **Substituir fonte** apaga todos os Marcadores.
+Marcador é ponto de interesse do usuário ou importado do export. Vive no storage do app, não no arquivo do export. **Atualizar mapa** faz merge (ADR 0004). **Substituir fonte** apaga todos os Marcadores **só se o passo de marcadores concluir** (sucesso ou export sem markers). Parse falho: lista intacta.
 
 ## Campos do MVP (product-brief)
 
@@ -22,9 +22,9 @@ Marcador é ponto de interesse do usuário ou importado do export. Vive no stora
 
 Dois marcadores na mesma coordenada podem coexistir se o nome (slug) for diferente.
 
-## Origem (fechado o suficiente)
+## Origem (fechado)
 
-O app precisa distinguir importado vs criado no app para a reimportação atualizar o equivalente certo. Nome do campo de origem: **TBD** (não inventar enum).
+Boolean `imported`: `true` veio do export; `false` (ou ausente no draft) é alta manual. Sem enum público no MVP. O merge usa a chave de idempotência; este flag só distingue a origem.
 
 ## Fora deste modelo
 
@@ -38,4 +38,4 @@ O app precisa distinguir importado vs criado no app para a reimportação atuali
 - Dado edição manual, quando nome, dimensão ou X/Z mudam, então o id interno permanece; a chave de importação só vale na importação.
 - Dado exclusão, quando o usuário confirma, então o Marcador some do storage local até **Atualizar mapa** recriar a mesma chave, se ela ainda existir no export.
 - Dado **Atualizar mapa**, quando a chave coincide, então atualiza o existente e não duplica; manuais sem equivalente no export permanecem.
-- Dado **Substituir fonte**, quando o usuário confirma, então todos os Marcadores somem do storage; o novo export pode recriar os seus.
+- Dado **Substituir fonte**, quando o usuário confirma e o passo de marcadores **conclui**, então todos os Marcadores somem do storage; o novo export pode recriar os seus. Parse falho: a lista permanece.

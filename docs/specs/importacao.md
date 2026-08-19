@@ -8,7 +8,7 @@ A Fonte de Mapa é o export uNmINeD copiado para o storage interno. O app não e
 2. App valida arquivos esperados, no mínimo: `unmined.map.properties.js`, `unmined.map.regions.js` e `tiles/`
 3. App copia o export para storage interno
 4. App importa marcadores existentes no export, quando houver
-5. Mapa passa a servir tiles da cópia (static server local preferido; HTML/file local como fallback)
+5. Mapa passa a servir tiles da **cópia interna** via file/HTML local. Static server HTTP em `127.0.0.1` é pós-MVP.
 
 Há **duas** ações depois da primeira importação (não o app adivinhar se é o mesmo mundo):
 
@@ -65,4 +65,4 @@ Há **duas** ações depois da primeira importação (não o app adivinhar se é
 
 ## TBD
 
-- Schema exato dos arquivos de markers do uNmINeD (inspecionar export real na implementação)
+Nenhum TBD de produto. Export real observado (2026-08-19): [Inspect real uNmINeD export markers and tiles](https://github.com/rodcordeiro/-mc-companion/issues/4). CLI gera **uma pasta por Dimensão**; markers em `custom.markers.js` (`UnminedCustomMarkers`); tiles em `tiles/zoom.{z}/{xd}/{yd}/tile.{x}.{y}.{imageFormat}`. O parser/viewer atuais ainda não batem com esse layout — implementação, não regra nova.

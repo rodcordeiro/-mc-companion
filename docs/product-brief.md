@@ -57,14 +57,14 @@ O export uNmINeD gera uma visualizacao web util, mas nao e um app companion mobi
 2. App valida arquivos esperados, como `unmined.map.properties.js`, `unmined.map.regions.js` e `tiles/`.
 3. App copia o export para storage interno.
 4. App importa marcadores existentes, quando houver.
-5. Mapa passa a servir tiles importados por static server local.
+5. Mapa passa a servir tiles da cópia interna via file/HTML local (sem rede externa). Static server HTTP em `127.0.0.1` fica para depois do MVP.
 
 ## Riscos
 
 - Volume de tiles pode ocupar muito armazenamento.
 - Acesso persistente a pastas no Android pode variar por versao/API.
 - WebView com muitos tiles pode exigir ajustes de cache.
-- Static server local pode exigir biblioteca compativel com Expo/Android.
+- Static server local (pós-MVP) pode exigir biblioteca compativel com Expo/Android.
 - Formato de markers do uNmINeD pode variar; importador deve ser tolerante.
 
 ## Criterios de Aceite do MVP

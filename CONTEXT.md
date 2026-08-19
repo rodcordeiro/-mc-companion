@@ -65,4 +65,5 @@ Tela onde o usuario seleciona a pasta do export uNmINeD e dispara a primeira imp
 Pagina web local, renderizada em WebView, responsavel por exibir tiles uNmINeD e overlays no mapa.
 
 ### Static Server Local
-Servidor HTTP local embutido no app para servir tiles e assets importados ao Viewer Leaflet por `127.0.0.1`.
+Servidor HTTP local embutido no app para servir tiles por `127.0.0.1`. Fora do MVP; no recorte atual o Viewer lê a cópia da Fonte de Mapa via file/HTML.
+_Avoid_: exigir HTTP para o aceite do MVP

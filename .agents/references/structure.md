@@ -21,4 +21,4 @@ docs/                    # specs, ADRs, design.pen
 .agents/references/
 ```
 
-Ainda **não é um repositório git** neste path.
+Repositório git: `origin` = `github.com/rodcordeiro/-mc-companion`, branch `main`.

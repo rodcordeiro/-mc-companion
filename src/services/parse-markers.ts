@@ -1,13 +1,13 @@
 import { Directory, File } from 'expo-file-system';
 
 import {
+  combineMarkerFileResults,
   isMarkerFileName,
   parseUnminedMarkersSource,
   type MarkerParseResult,
-  type ParsedExportMarker,
 } from '@/services/parse-markers-source';
 
-export type { MarkerParseResult, ParsedExportMarker };
+export type { MarkerParseResult, ParsedExportMarker } from '@/services/parse-markers-source';
 
 /**
  * Parser tolerante de markers do export uNmINeD (schema varia).
@@ -22,34 +22,28 @@ export async function parseExportMarkers(root: Directory): Promise<MarkerParseRe
       }
     }
   } catch {
-    return { status: 'missing' };
+    return {
+      status: 'failed',
+      error: 'Não foi possível ler os arquivos de marcadores da Fonte',
+    };
   }
 
   if (files.length === 0) {
     return { status: 'missing' };
   }
 
-  const collected: ParsedExportMarker[] = [];
-  let parseError: string | undefined;
-  let sawEnabledFile = false;
-
+  const results: MarkerParseResult[] = [];
   for (const file of files) {
-    const text = await file.text();
-    const parsed = parseUnminedMarkersSource(text, file.name);
-    if (parsed.status === 'failed') {
-      parseError = parsed.error;
-      continue;
+    try {
+      const text = await file.text();
+      results.push(parseUnminedMarkersSource(text, file.name));
+    } catch {
+      results.push({
+        status: 'failed',
+        error: `Não foi possível interpretar ${file.name}`,
+      });
     }
-    if (parsed.status === 'missing') {
-      continue;
-    }
-    sawEnabledFile = true;
-    collected.push(...parsed.markers);
   }
 
-  if (collected.length === 0 && parseError && !sawEnabledFile) {
-    return { status: 'failed', error: parseError };
-  }
-
-  return { status: 'ok', markers: collected };
+  return combineMarkerFileResults(results);
 }

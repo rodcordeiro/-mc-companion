@@ -40,7 +40,9 @@ Há **duas** ações depois da primeira importação (não o app adivinhar se é
 - Sem arquivo de markers no **primeiro** import: lista inalterada nesse passo (ainda vazia)
 - Sem arquivo de markers após **Atualizar mapa**: lista local permanece (só não entram novos do export)
 - Sem arquivo de markers após **Substituir fonte** (passo concluído): lista fica vazia
-- Parse de markers **falhou**: lista inalterada (Atualizar e Substituir)
+- Parse de markers **falhou**: lista inalterada (Atualizar e Substituir). Qualquer arquivo da raiz com parse ou I/O falho falha o passo inteiro — um irmão `ok` (inclusive `isEnabled: false`) não mascara a falha
+- Arquivos de markers: só na **raiz** da Fonte. Export aninhado (ex. `nether/` com `index.html` próprio) é outra Fonte, não pasta de tiles
+- I/O no passo de marcadores (ler arquivo) é falha desse passo: Fonte nova permanece; sem rollback da cópia
 
 ## Critérios de aceite
 
@@ -53,7 +55,8 @@ Há **duas** ações depois da primeira importação (não o app adivinhar se é
 - Dado Marcadores manuais, quando o usuário **Atualiza o mapa**, então esses pontos permanecem.
 - Dado o app reiniciado, quando o usuário abre o app, então Fonte de Mapa e marcadores locais permanecem (se a Fonte não tiver sido substituída).
 - Dado uma Fonte já importada, quando o usuário confirma **Substituir fonte** e o passo de marcadores **conclui**, então todos os Marcadores locais são apagados e, em seguida, os do novo export entram (se existirem).
-- Dado tiles/Fonte válidos e falha no passo de marcadores, quando a cópia já está ativa, então o Mapa usa a Fonte nova, a lista de Marcadores não muda e a Configuração mostra o erro. Sem rollback da Fonte.
+- Dado tiles/Fonte válidos e falha no passo de marcadores (parse ou I/O), quando a cópia já está ativa, então o Mapa usa a Fonte nova, a lista de Marcadores não muda e a Configuração mostra o erro. Sem rollback da Fonte.
+- Dado um arquivo de markers ilegível ou com parse falho na raiz e outro arquivo da raiz que parseia (inclusive `isEnabled: false`), quando a importação termina, então o passo de marcadores falha e a lista permanece.
 - Dado **Substituir fonte** com parse de markers falho, quando o processo termina, então a lista **não** é apagada.
 - Dado falha ao copiar/validar a nova Fonte, quando o processo aborta, então Marcadores e Fonte antiga permanecem.
 - Dado tamanho conhecido, quando o usuário confirma, então a cópia inicia; se cancelar, não copia.
@@ -65,4 +68,4 @@ Há **duas** ações depois da primeira importação (não o app adivinhar se é
 
 ## TBD
 
-Nenhum TBD de produto. Export real observado (2026-08-19): [Inspect real uNmINeD export markers and tiles](https://github.com/rodcordeiro/-mc-companion/issues/4). CLI gera **uma pasta por Dimensão**; markers em `custom.markers.js` (`UnminedCustomMarkers`); tiles em `tiles/zoom.{z}/{xd}/{yd}/tile.{x}.{y}.{imageFormat}`. O parser/viewer atuais ainda não batem com esse layout — implementação, não regra nova.
+Nenhum TBD de produto. Export real observado (2026-08-19): [Inspect real uNmINeD export markers and tiles](https://github.com/rodcordeiro/-mc-companion/issues/4). CLI gera **uma pasta por Dimensão**; markers em `custom.markers.js` (`UnminedCustomMarkers`, pins sem `y`/`dimension` → Overworld); tiles em `tiles/zoom.{z}/{xd}/{yd}/tile.{x}.{y}.{imageFormat}`.

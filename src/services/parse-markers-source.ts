@@ -102,6 +102,27 @@ function collectMarkers(node: unknown, acc: ParsedExportMarker[]): void {
 }
 
 /**
+ * Combina o parse de cada arquivo da raiz. Qualquer `failed` vence:
+ * um irmão `ok` (inclusive `isEnabled: false`) não mascara falha.
+ */
+export function combineMarkerFileResults(results: MarkerParseResult[]): MarkerParseResult {
+  if (results.length === 0) {
+    return { status: 'missing' };
+  }
+
+  const failed = results.find(
+    (result): result is Extract<MarkerParseResult, { status: 'failed' }> =>
+      result.status === 'failed',
+  );
+  if (failed) {
+    return failed;
+  }
+
+  const markers = results.flatMap((result) => (result.status === 'ok' ? result.markers : []));
+  return { status: 'ok', markers };
+}
+
+/**
  * Interpreta o texto de um arquivo de markers uNmINeD (sem executar JS).
  */
 export function parseUnminedMarkersSource(source: string, fileName = 'markers'): MarkerParseResult {
@@ -130,9 +151,13 @@ export function parseUnminedMarkersSource(source: string, fileName = 'markers'):
       return { status: 'ok', markers: [] };
     }
     const list = Array.isArray(parsed.markers) ? parsed.markers : [];
-    const markers = list
-      .map((item) => lookLikeMarker(item))
-      .filter((item): item is ParsedExportMarker => item !== null);
+    const markers: ParsedExportMarker[] = [];
+    for (const item of list) {
+      const marker = lookLikeMarker(item);
+      if (marker) {
+        markers.push({ ...marker, dimensao: 'overworld' });
+      }
+    }
     return { status: 'ok', markers };
   }
 

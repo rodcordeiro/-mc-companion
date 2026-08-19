@@ -45,7 +45,7 @@ Estacao de juncao da ferrovia. Uma Rota desvia para um Hub ja existente, mesmo f
 _Avoid_: midpoint criado automaticamente; estacao comum sem papel de juncao
 
 ### Importacao de Marcadores
-Processo que le marcadores existentes no export uNmINeD e cria ou atualiza marcadores locais sem duplicar entradas equivalentes. Se a Fonte ja estiver valida e este passo falhar, o mapa permanece e a lista nao muda. Nao ha retry so deste passo: o usuario usa Atualizar mapa ou Substituir fonte.
+Processo que le arquivos de marcadores na raiz da Fonte (export uNmINeD) e cria ou atualiza marcadores locais sem duplicar entradas equivalentes. Se a Fonte ja estiver valida e este passo falhar (parse ou I/O), o mapa permanece e a lista nao muda. Nao ha retry so deste passo: o usuario usa Atualizar mapa ou Substituir fonte.
 
 ### Chave de Idempotencia do Marcador
 Identificador estavel usado para evitar duplicidade na importacao. Formato recomendado: `<dimension>:<round(x)>:<round(z)>:<slug(nome)>`.

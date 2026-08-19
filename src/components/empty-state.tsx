@@ -30,6 +30,11 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     gap: spacing.md,
   },
+  title: {
+    color: colors.text,
+    fontSize: 18,
+    textAlign: 'center',
+  },
   description: {
     color: colors.muted,
     fontSize: 14,

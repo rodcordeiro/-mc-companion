@@ -9,7 +9,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --import ./scripts/register-ts-test-aliases.mjs --test src/services/unmined-tile-url.test.ts src/services/parse-unmined-source.test.ts"
   },
   "dependencies": {
     "expo": "~57.0.12",

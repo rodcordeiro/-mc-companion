@@ -25,7 +25,11 @@ export const VIEWER_BOOTSTRAP = `
     var format = init.metadata.imageFormat || 'png';
     var base = init.tileBaseUrl;
     if (base.charAt(base.length - 1) !== '/') base += '/';
-    return base + path + coords.z + '/' + coords.x + '.' + coords.y + '.' + format;
+    if (path.charAt(path.length - 1) !== '/') path += '/';
+    var xd = Math.floor(coords.x / 10);
+    var yd = Math.floor(coords.y / 10);
+    // Keep in sync with unminedTileRelativePath (src/services/unmined-tile-url.ts).
+    return base + path + 'zoom.' + coords.z + '/' + xd + '/' + yd + '/tile.' + coords.x + '.' + coords.y + '.' + format;
   }
 
   function clearOverlay() {

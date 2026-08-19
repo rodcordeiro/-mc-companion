@@ -6,6 +6,7 @@ App Expo SDK 57, Android first. Entry: `expo-router/entry`. Rotas em `src/app/`.
 pnpm start          # Metro
 pnpm android        # device/emulator Android
 pnpm typecheck      # tsc --noEmit
+pnpm test           # node:test nos parsers/tile URLs
 ```
 
 - Home = Mapa (`src/app/index.tsx` → `src/screens/map`).

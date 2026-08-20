@@ -4,7 +4,7 @@
 
 - Sem ESLint/`pnpm lint` configurado (script existe, sem config).
 - Sem README.
-- Aceite ainda inclui smoke no device; parsers/tile URLs têm `pnpm test`.
+- Aceite ainda inclui smoke no device no development build; parsers/tile URLs têm `pnpm test`.
 
 ## Vs produto documentado
 

@@ -27,5 +27,5 @@ Companion Android (Expo / React Native) para mapas Minecraft a partir de exports
 ## Skills
 
 - Sempre: `$nero`.
-- Código Expo/RN: `$vercel-react-native-skills`, `$react-native-best-practices`, `$expo-router`, `$expo-project-structure`.
+- Código Expo/RN: `$vercel-react-native-skills`, `$react-native-best-practices`, `$expo-router`, `$expo-project-structure`, `$expo-dev-client`.
 - Docs de lib: `$context7-mcp`.

@@ -7,6 +7,8 @@ AGENTS.md
 CONTEXT.md
 package.json
 app.json
+eas.json
+.github/workflows/eas-build.yml
 src/app/                 # rotas Expo Router (NativeTabs)
 src/screens/map|
 src/screens/markers|

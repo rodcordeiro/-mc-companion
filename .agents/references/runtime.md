@@ -2,12 +2,22 @@
 
 App Expo SDK 57, Android first. Entry: `expo-router/entry`. Rotas em `src/app/`.
 
+Desenvolvimento no device: **development build** (`expo-dev-client`), não Expo Go. Tiles `file://` na WebView e o picker SAF precisam do binário do app.
+
 ```text
-pnpm start          # Metro
-pnpm android        # device/emulator Android
+pnpm start          # Metro para o dev client
+pnpm android        # abre o Metro no Android (exige APK de development instalado)
 pnpm typecheck      # tsc --noEmit
 pnpm test           # node:test nos parsers/tile URLs
 ```
+
+Primeira vez no aparelho:
+
+1. Secret `EXPO_TOKEN` no GitHub Actions (conta Expo `rodcordeiro`).
+2. Build: `eas build --platform android --profile development` (ou push em `develop`; CI mapeia `develop` → canal/perfil `development`, `main` → `production`).
+3. Instalar o APK interno e então `pnpm start`. O launcher do dev client conecta no Metro.
+
+`android/` e `ios/` não entram no git (CNG no EAS). Production (`eas.json` perfil `production`) **não** inclui o launcher do dev client.
 
 - Home = Mapa (`src/app/index.tsx` → `src/screens/map`).
 - Viewer Leaflet em WebView (`src/viewer` + Leaflet vendorizado). Sem `expo-leaflet`.

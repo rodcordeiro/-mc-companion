@@ -1,0 +1,56 @@
+name: EAS Build
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+concurrency:
+  group: eas-build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Android (${{ github.ref_name == 'main' && 'production' || 'development' }})
+    if: github.ref_name == 'main' || github.ref_name == 'develop'
+    runs-on: ubuntu-latest
+    env:
+      EAS_BUILD_PROFILE: ${{ github.ref_name == 'main' && 'production' || 'development' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.18.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Setup Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          packager: pnpm
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build on EAS
+        run: eas build --platform android --profile "$EAS_BUILD_PROFILE" --non-interactive --no-wait

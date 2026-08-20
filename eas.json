@@ -21,7 +21,6 @@
     "production": {
       "channel": "production",
       "autoIncrement": true,
-      "buildConfiguration": "Release",
       "android": {
         "buildType": "apk"
       }

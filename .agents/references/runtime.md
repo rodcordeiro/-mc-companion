@@ -19,6 +19,8 @@ Primeira vez no aparelho:
 
 `android/` e `ios/` não entram no git (CNG no EAS). Production (`eas.json` perfil `production`) **não** inclui o launcher do dev client.
 
+Pacotes nativos Expo devem seguir o SDK (`pnpm expo install <pkg>` / `pnpm expo install --fix`). `expo-file-system` no SDK 57 é `~57.0.x`, não `19.x` — a 19.x ainda referencia `FilePermissionModuleInterface`, removida do `expo-modules-core` 57, e o APK crasha no `MainApplication.onCreate`.
+
 - Home = Mapa (`src/app/index.tsx` → `src/screens/map`).
 - Viewer Leaflet em WebView (`src/viewer` + Leaflet vendorizado). Sem `expo-leaflet`.
 - Tiles da cópia interna via `file://` + `baseUrl` (MVP). Static server HTTP `127.0.0.1` é pós-MVP; nativo extra exigiria reavaliar ADR 0001.
